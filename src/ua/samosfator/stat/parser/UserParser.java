@@ -18,6 +18,8 @@ public class UserParser {
     }
 
     public User getUser() {
+        System.out.println("Parsing user: " + uid);
+
         loadUserPageHtml(uid);
 
         User user = new User();

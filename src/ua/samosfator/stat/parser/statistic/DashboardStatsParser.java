@@ -42,6 +42,18 @@ public class DashboardStatsParser {
         return dashboardStats;
     }
 
+    public static DashboardStats getEmptyDashboardStats() {
+        DashboardStats dashboardStats = new DashboardStats();
+
+        dashboardStats.setRoadLength(0);
+        dashboardStats.setPoi(0);
+        dashboardStats.setBusinessListings(0);
+        dashboardStats.setRegions(0);
+        dashboardStats.setFeatureEdits(0);
+
+        return dashboardStats;
+    }
+
     private double parseRoadLength() {
         return dashboardStatsRowsParser.parseDoubleRow("Road length");
     }

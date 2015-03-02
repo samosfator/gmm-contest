@@ -35,6 +35,17 @@ public class TimePeriodStatsParser {
         return timePeriodStats;
     }
 
+    public static TimePeriodStats getEmptyTimePeriodStats() {
+        TimePeriodStats timePeriodStats = new TimePeriodStats();
+
+        timePeriodStats.setDays(0);
+        timePeriodStats.setTotalEdits(0);
+        timePeriodStats.setApprovedEdits(0);
+        timePeriodStats.setReviews(0);
+
+        return timePeriodStats;
+    }
+
     private int parseDays() {
         return timePeriodStatsPiecesParser.parseIntPiece("days");
     }

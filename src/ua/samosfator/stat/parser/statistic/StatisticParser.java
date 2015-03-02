@@ -14,11 +14,22 @@ public class StatisticParser {
     public Statistic getStatistic() {
         Statistic statistic = new Statistic();
 
-        TimePeriodStatsParser timePeriodStatsParser = new TimePeriodStatsParser(getTimePeriodStatsElement());
-        DashboardStatsParser dashboardStatsParser = new DashboardStatsParser(getDashboardStatsElement());
+        Element timePeriodStatsElement = getTimePeriodStatsElement();
+        Element dashboardStatsElement = getDashboardStatsElement();
 
-        statistic.setTimePeriodStats(timePeriodStatsParser.getTimePeriodStats());
-        statistic.setDashboardStats(dashboardStatsParser.getDashboardStats());
+        if (timePeriodStatsElement == null) {
+            statistic.setTimePeriodStats(TimePeriodStatsParser.getEmptyTimePeriodStats());
+        } else {
+            TimePeriodStatsParser timePeriodStatsParser = new TimePeriodStatsParser(timePeriodStatsElement);
+            statistic.setTimePeriodStats(timePeriodStatsParser.getTimePeriodStats());
+        }
+
+        if (dashboardStatsElement == null) {
+            statistic.setDashboardStats(DashboardStatsParser.getEmptyDashboardStats());
+        } else {
+            DashboardStatsParser dashboardStatsParser = new DashboardStatsParser(dashboardStatsElement);
+            statistic.setDashboardStats(dashboardStatsParser.getDashboardStats());
+        }
 
         return statistic;
     }
@@ -28,6 +39,6 @@ public class StatisticParser {
     }
 
     private Element getDashboardStatsElement() {
-        return statisticElement.getElementById("div-mini-dashboard-expanded");
+        return statisticElement.select("#div-mini-dashboard-expanded").first();
     }
 }
