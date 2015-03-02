@@ -30,7 +30,10 @@ public class StartupListener implements ServletContextListener {
                             users.add(user);
                         }
 
-                        StatisticHistory.usersHistory.put(updateTime, users);
+                        HashMap<String, Set<User>> usersUpdateMap = new HashMap<>();
+                        usersUpdateMap.put(updateTime, users);
+
+                        StatisticHistory.usersHistory.add(usersUpdateMap);
 
                         Thread.sleep(20_000);
                     }
