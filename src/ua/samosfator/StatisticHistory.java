@@ -2,13 +2,13 @@ package ua.samosfator;
 
 import ua.samosfator.stat.bean.User;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class StatisticHistory {
 
-    public static Map<String, List<User>> usersHistory = new HashMap<>();
+    public static Map<String, Set<User>> usersHistory = new LinkedHashMap<>();
 
 }

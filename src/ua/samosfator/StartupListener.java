@@ -7,9 +7,7 @@ import ua.samosfator.stat.parser.UserParser;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class StartupListener implements ServletContextListener {
 
@@ -24,7 +22,7 @@ public class StartupListener implements ServletContextListener {
                         userIdLoader.updateUidsList();
                         String updateTime = new SimpleDateFormat("dd-MM-yyyy HH:mm").format(new Date());
 
-                        List<User> users = new ArrayList<>();
+                        Set<User> users = new HashSet<>();
 
                         for (String uid : UserIdHolder.getUids()) {
                             UserParser userParser = new UserParser(uid);
