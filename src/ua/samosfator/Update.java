@@ -1,6 +1,5 @@
 package ua.samosfator;
 
-import com.google.gson.Gson;
 import ua.samosfator.stat.bean.User;
 import ua.samosfator.stat.parser.UserParser;
 
@@ -9,8 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Update extends HttpServlet {
 
