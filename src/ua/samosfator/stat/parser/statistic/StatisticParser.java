@@ -1,7 +1,9 @@
 package ua.samosfator.stat.parser.statistic;
 
 import org.jsoup.nodes.Element;
+import ua.samosfator.stat.bean.User;
 import ua.samosfator.stat.bean.statistic.Statistic;
+import ua.samosfator.stat.bean.statistic.StatsSnapshot;
 
 public class StatisticParser {
 
@@ -13,25 +15,53 @@ public class StatisticParser {
 
     public Statistic getStatistic() {
         Statistic statistic = new Statistic();
+        StatsSnapshot statsSnapshot = new StatsSnapshot();
 
         Element timePeriodStatsElement = getTimePeriodStatsElement();
         Element dashboardStatsElement = getDashboardStatsElement();
 
         if (timePeriodStatsElement == null) {
-            statistic.setTimePeriodStats(TimePeriodStatsParser.getEmptyTimePeriodStats());
+            statsSnapshot.setTimePeriodStats(TimePeriodStatsParser.getEmptyTimePeriodStats());
         } else {
             TimePeriodStatsParser timePeriodStatsParser = new TimePeriodStatsParser(timePeriodStatsElement);
-            statistic.setTimePeriodStats(timePeriodStatsParser.getTimePeriodStats());
+            statsSnapshot.setTimePeriodStats(timePeriodStatsParser.getTimePeriodStats());
         }
 
         if (dashboardStatsElement == null) {
-            statistic.setDashboardStats(DashboardStatsParser.getEmptyDashboardStats());
+            statsSnapshot.setDashboardStats(DashboardStatsParser.getEmptyDashboardStats());
         } else {
             DashboardStatsParser dashboardStatsParser = new DashboardStatsParser(dashboardStatsElement);
-            statistic.setDashboardStats(dashboardStatsParser.getDashboardStats());
+            statsSnapshot.setDashboardStats(dashboardStatsParser.getDashboardStats());
         }
 
+        statistic.getStatsSnapshots().add(statsSnapshot);
+
         return statistic;
+    }
+
+    public Statistic getStatistic(User previouslyParsedUser) {
+        StatsSnapshot statsSnapshot = new StatsSnapshot();
+
+        Element timePeriodStatsElement = getTimePeriodStatsElement();
+        Element dashboardStatsElement = getDashboardStatsElement();
+
+        if (timePeriodStatsElement == null) {
+            statsSnapshot.setTimePeriodStats(TimePeriodStatsParser.getEmptyTimePeriodStats());
+        } else {
+            TimePeriodStatsParser timePeriodStatsParser = new TimePeriodStatsParser(timePeriodStatsElement);
+            statsSnapshot.setTimePeriodStats(timePeriodStatsParser.getTimePeriodStats());
+        }
+
+        if (dashboardStatsElement == null) {
+            statsSnapshot.setDashboardStats(DashboardStatsParser.getEmptyDashboardStats());
+        } else {
+            DashboardStatsParser dashboardStatsParser = new DashboardStatsParser(dashboardStatsElement);
+            statsSnapshot.setDashboardStats(dashboardStatsParser.getDashboardStats());
+        }
+
+        previouslyParsedUser.getStatistic().getStatsSnapshots().add(statsSnapshot);
+
+        return previouslyParsedUser.getStatistic();
     }
 
     private Element getTimePeriodStatsElement() {

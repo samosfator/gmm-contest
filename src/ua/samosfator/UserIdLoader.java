@@ -19,7 +19,7 @@ public class UserIdLoader {
     public void updateUidsList() {
         try {
 //            String txt = loadUidsTextFile();
-//            List<String> uids = extractUidsFromTextFile(txt);
+//            Set<String> uids = extractUidsFromTextFile(txt);
             Set<String> uids = loadUisFromGoogleSpreadsheet();
 
             UserIdHolder.setUids(uids);
@@ -33,13 +33,13 @@ public class UserIdLoader {
     private Set<String> loadUisFromGoogleSpreadsheet() throws IOException {
         Set<String> extractedUids = new HashSet<>();
 
-        Document document = Jsoup.connect(uidRemoteSource).get();
+        Document document = Jsoup.connect(uidRemoteSource).timeout(0).get();
         Elements allLinks = document.select("a");
 
         Pattern regexPattern = Pattern.compile("\\d{19,}");
 
         for (Element aLink : allLinks) {
-            if (aLink.attr("href").contains("mapmaker")) {
+            if (aLink.attr("href").contains("mapmaker")/* && extractedUids.size() < 2*/) {
                 Matcher matcher = regexPattern.matcher(aLink.attr("href"));
                 while (matcher.find()) {
                     extractedUids.add(matcher.group());
@@ -47,16 +47,20 @@ public class UserIdLoader {
             }
         }
 
+//        extractedUids.add("213060211708116919463");
         return extractedUids;
     }
 
     private String loadUidsTextFile() throws IOException {
-        InputStream inputStream = new URL(uidRemoteSource).openStream();
+        InputStream inputStream = new URL("http://pastebin.com/raw.php?i=HZS9xSk7").openStream();
         return new Scanner(inputStream).useDelimiter("\\A").next();
     }
 
-    private List<String> extractUidsFromTextFile(String txt) {
-        List<String> extractedUids = new ArrayList<>();
+    private Set<String> extractUidsFromTextFile(String txt) {
+        System.out.println(txt);
+
+
+        Set<String> extractedUids = new HashSet<>();
 
         Pattern regexPattern = Pattern.compile("\\d{19,}");
         Matcher matcher = regexPattern.matcher(txt);

@@ -40,4 +40,13 @@ public class User {
     public void setStatistic(Statistic statistic) {
         this.statistic = statistic;
     }
+
+    public boolean pretendsOnTShirt() {
+        return getStatistic().getFirstStatsSnapshot().getTimePeriodStats().getTotalEdits() < 500;
+    }
+
+    public boolean pretendsOnHoody() {
+        return getStatistic().getFirstStatsSnapshot().getTimePeriodStats().getTotalEdits() > 500
+                && getStatistic().getFirstStatsSnapshot().getTimePeriodStats().getTotalEdits() < 3000;
+    }
 }

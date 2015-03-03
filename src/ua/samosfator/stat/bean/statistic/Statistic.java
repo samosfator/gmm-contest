@@ -1,23 +1,24 @@
 package ua.samosfator.stat.bean.statistic;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Statistic {
+    private List<StatsSnapshot> statsSnapshots = new ArrayList<>();
 
-    private TimePeriodStats timePeriodStats;
-    private DashboardStats dashboardStats;
-
-    public TimePeriodStats getTimePeriodStats() {
-        return timePeriodStats;
+    public List<StatsSnapshot> getStatsSnapshots() {
+        return statsSnapshots;
     }
 
-    public void setTimePeriodStats(TimePeriodStats timePeriodStats) {
-        this.timePeriodStats = timePeriodStats;
+    public void setStatsSnapshots(List<StatsSnapshot> statsSnapshots) {
+        this.statsSnapshots = statsSnapshots;
     }
 
-    public DashboardStats getDashboardStats() {
-        return dashboardStats;
+    public StatsSnapshot getFirstStatsSnapshot() {
+        return statsSnapshots.get(0);
     }
 
-    public void setDashboardStats(DashboardStats dashboardStats) {
-        this.dashboardStats = dashboardStats;
+    public StatsSnapshot getLastStatsSnapshot() {
+        return statsSnapshots.get(statsSnapshots.size() - 1);
     }
 }

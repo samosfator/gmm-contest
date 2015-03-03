@@ -1,16 +1,19 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: vlad
-  Date: 01.03.15
-  Time: 1:09
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head>
-    <title></title>
-  </head>
-  <body>
+<head>
+    <title>adsa</title>
+</head>
+<body>
+<table>
+    <th>
+        <tr>
+            <td>Нік</td>
+            <td>Всі правки</td>
+            <td>Бізнес-об’єкти</td>
+            <td>POI</td>
+        </tr>
+    </th>
 
-  </body>
+</table>
+</body>
 </html>

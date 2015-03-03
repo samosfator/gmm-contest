@@ -12,8 +12,14 @@ public class UserParser {
 
     private Document userPageDocument;
     private String uid;
+    private User previouslyParsedUser;
 
     public UserParser(String uid) {
+        this.uid = uid;
+    }
+
+    public UserParser(User previousParsingResult, String uid) {
+        this.previouslyParsedUser = previousParsingResult;
         this.uid = uid;
     }
 
@@ -21,17 +27,23 @@ public class UserParser {
         System.out.println("Parsing user: " + uid);
 
         loadUserPageHtml(uid);
-
-        User user = new User();
-
         StatisticParser statisticParser = new StatisticParser(getStatisticElement());
 
-        user.setUid(uid);
-        user.setName(parseUsername());
-        user.setAvatarUrl(parseAvatarUrl());
-        user.setStatistic(statisticParser.getStatistic());
+        if (previouslyParsedUser == null) {
 
-        return user;
+            User user = new User();
+
+
+            user.setUid(uid);
+            user.setName(parseUsername());
+            user.setAvatarUrl(parseAvatarUrl());
+            user.setStatistic(statisticParser.getStatistic());
+
+            return user;
+        } else {
+            previouslyParsedUser.setStatistic(statisticParser.getStatistic(previouslyParsedUser));
+            return previouslyParsedUser;
+        }
     }
 
     private void loadUserPageHtml(String uid) {
@@ -52,6 +64,6 @@ public class UserParser {
     }
 
     private Element getStatisticElement() {
-        return userPageDocument.getElementById("rightpanel");
+        return userPageDocument.select("#rightpanel").first();
     }
 }
